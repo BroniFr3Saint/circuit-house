@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Budget Finder | CircuitHouse</title>
+    <meta name="description" content="Enter your budget in GH₵ and find matching laptops, phones, accessories, and services at CircuitHouse." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="logo.svg" alt="" />
+        <span>CircuitHouse</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="items.html">Catalogue</a>
+        <a href="budget.html" aria-current="page">Budget Finder</a>
+        <a href="laptops.html">Laptops</a>
+        <a href="phones.html">Phones</a>
+        <a href="accessories.html">Accessories</a>
+        <a href="os-installations.html">OS Installations</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero budget-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">What can your budget get you?</p>
+          <h1>Enter an amount. See matching gadgets.</h1>
+          <p>
+            Type your budget in cedis and CircuitHouse will show products and
+            services you can afford, starting with the closest matches.
+          </p>
+        </div>
+      </section>
+
+      <section class="section budget-tool">
+        <form class="budget-form">
+          <label>
+            Your budget in cedis
+            <input id="budget-input" type="number" min="0" step="10" placeholder="Example: 4000" />
+          </label>
+          <label>
+            Category
+            <select id="budget-category">
+              <option value="All">All products and services</option>
+              <option value="Laptop">Laptops</option>
+              <option value="Phone">Phones</option>
+              <option value="Accessory">Accessories</option>
+              <option value="Service">OS installation services</option>
+            </select>
+          </label>
+          <button class="button primary" type="submit">Find gadgets</button>
+        </form>
+        <div class="budget-status" id="budget-status">
+          Enter an amount to search the catalogue.
+        </div>
+      </section>
+
+      <section class="section product-section">
+        <div class="product-grid" id="budget-results"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>CircuitHouse</span>
+      <span>Budget finder searches products and services at or below your amount.</span>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="budget.js"></script>
+  </body>
+</html>

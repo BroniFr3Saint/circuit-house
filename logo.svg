@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Circuit House logo</title>
+  <desc id="desc">A green circuit-shaped house mark with a golden power core.</desc>
+  <rect width="320" height="320" rx="64" fill="#073b40"/>
+  <path d="M72 148 160 72l88 76v104c0 12-10 22-22 22H94c-12 0-22-10-22-22V148Z" fill="#0d5c63"/>
+  <path d="M94 151 160 94l66 57" fill="none" stroke="#f0c76a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M112 179h96v70h-96z" fill="#e8f2f1"/>
+  <path d="M140 249v-42h40v42" fill="#073b40"/>
+  <circle cx="160" cy="164" r="23" fill="#f0c76a"/>
+  <path d="M160 137v26l-16 18M160 163l20 18" fill="none" stroke="#073b40" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M58 92h46M216 92h46M43 208h45M232 208h45M160 42v42M160 236v42" fill="none" stroke="#47b39d" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="52" cy="92" r="10" fill="#f0c76a"/>
+  <circle cx="268" cy="92" r="10" fill="#f0c76a"/>
+  <circle cx="37" cy="208" r="10" fill="#f0c76a"/>
+  <circle cx="283" cy="208" r="10" fill="#f0c76a"/>
+</svg>
