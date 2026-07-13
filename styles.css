@@ -789,6 +789,64 @@ p {
   color: var(--brand-dark);
 }
 
+.social-links-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.social-links-container h3 {
+  color: var(--brand-dark);
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+  font-weight: 800;
+}
+
+.social-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.social-link-card {
+  display: grid;
+  gap: 8px;
+  padding: 24px 20px;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-link-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--brand);
+}
+
+.social-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.social-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--brand-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.social-handle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
 @media (max-width: 900px) {
   .contact-home-grid {
     grid-template-columns: repeat(2, 1fr);
