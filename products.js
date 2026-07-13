@@ -479,7 +479,7 @@ function productCard(product) {
         <div class="price-row">
           <strong>${formatCedis(product.price)}</strong>
           <div class="price-actions">
-            ${hasWalkthrough ? `<button class="button small outline experience-btn">🔍 Experience</button>` : ''}
+            ${hasWalkthrough ? `<button class="button small outline experience-btn" data-product-name="${product.name.replace(/"/g, '&quot;')}" data-category="${product.category}">🔍 Experience</button>` : ''}
             <a class="button small" href="${checkoutUrl(product)}">${actionLabel}</a>
           </div>
         </div>

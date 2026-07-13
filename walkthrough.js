@@ -953,20 +953,42 @@
     if (!btn) return;
     e.preventDefault();
 
-    const card = btn.closest(".product-card");
-    if (!card) return;
-    const nameEl = card.querySelector("h3");
-    if (!nameEl) return;
-    const name = nameEl.textContent.trim();
+    // Use data attributes for reliable product lookup
+    const productName = btn.getAttribute("data-product-name");
+    const category = btn.getAttribute("data-category");
+
+    if (!productName) {
+      // Fallback: try h3 text
+      const card = btn.closest(".product-card");
+      if (!card) return;
+      const nameEl = card.querySelector("h3");
+      if (!nameEl) return;
+      const name = nameEl.textContent.trim();
+      if (typeof PRODUCTS !== "undefined") {
+        const product = PRODUCTS.find(function (p) {
+          return p.name === name;
+        });
+        if (product && (product.category === "Laptop" || product.category === "Phone")) {
+          createModal(product);
+        }
+      }
+      return;
+    }
+
     if (typeof PRODUCTS !== "undefined") {
       const product = PRODUCTS.find(function (p) {
-        return p.name === name;
+        return p.name === productName;
       });
-      if (
-        product &&
-        (product.category === "Laptop" || product.category === "Phone")
-      ) {
+      if (product) {
         createModal(product);
+      } else if (category === "Laptop" || category === "Phone") {
+        // Product not found in array - show a basic simulation with available info
+        createModal({
+          name: productName,
+          category: category,
+          description: "Experience this device in an interactive simulation",
+          price: 0,
+        });
       }
     }
   });
