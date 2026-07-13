@@ -687,13 +687,1030 @@ p {
   font-weight: 700;
 }
 
-.price-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 6px;
-}
+/* =========================================================
+     WALKTHROUGH MODAL — Gadget Simulation
+     ========================================================= */
+    .wt-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .wt-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .wt-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .wt-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-height: 95vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .wt-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 10;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wt-close:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .wt-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .wt-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wt-badge {
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .wt-hint {
+      margin-top: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-align: center;
+      min-height: 1.2em;
+      transition: opacity 0.3s;
+    }
+
+    /* ---- Device Frames ---- */
+    .wt-device {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .wt-phone {
+      width: 280px;
+      height: 540px;
+      background: #111;
+      border-radius: 40px;
+      padding: 12px;
+      box-shadow:
+        0 0 0 2px #333,
+        0 0 0 3px #222,
+        0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .wt-phone .wt-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .wt-home-btn {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wt-home-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: rgba(255, 90, 31, 0.1);
+    }
+
+    .wt-laptop {
+      width: 420px;
+      height: 300px;
+      background: #111;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow:
+        0 0 0 2px #333,
+        0 0 0 3px #222,
+        0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .wt-laptop .wt-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .wt-screen * {
+      box-sizing: border-box;
+    }
+
+    /* ---- Lock Screen ---- */
+    .wt-lock {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-size: cover;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+
+    .wt-status-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 16px 0;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wt-lock-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .wt-lock-time {
+      font-size: 4rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+    }
+
+    .wt-lock-date {
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0.7;
+    }
+
+    .wt-lock-hint {
+      margin-top: 40px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      opacity: 0.5;
+      animation: wt-pulse 2s ease-in-out infinite;
+    }
+
+    .wt-lock-arrow {
+      font-size: 1.6rem;
+      opacity: 0.4;
+      animation: wt-bounce-up 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wt-pulse {
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes wt-bounce-up {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* ---- Home Screen ---- */
+    .wt-home {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-size: cover;
+      position: relative;
+    }
+
+    .wt-app-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 20px 12px 8px;
+      align-content: start;
+    }
+
+    .wt-app-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 6px 2px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .wt-app-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .wt-app-icon:active {
+      transform: scale(0.92);
+    }
+
+    .wt-icon-bg {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .wt-app-name {
+      font-size: 0.6rem;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .wt-dock {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 8px 12px 12px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* ---- App Views ---- */
+    .wt-app-view {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      animation: wt-slide-in 0.25s ease;
+    }
+
+    @keyframes wt-slide-in {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .wt-app-header {
+      padding: 10px 14px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .wt-app-header .wt-back {
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .wt-app-header .wt-back:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .wt-app-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wt-back-overlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .wt-back-overlay:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ---- Settings Items ---- */
+    .wt-set-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: white;
+      border-bottom: 1px solid #e5e5ea;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .wt-set-item:hover {
+      background: #f0f0f5;
+    }
+
+    .wt-set-item:first-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .wt-set-item:last-child {
+      border-bottom: none;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .wt-set-icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .wt-set-item div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wt-set-item strong {
+      font-size: 0.85rem;
+      color: #1c1c1e;
+    }
+
+    .wt-set-item small {
+      font-size: 0.72rem;
+      color: #8e8e93;
+    }
+
+    .wt-set-arrow {
+      color: #c7c7cc;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* ---- Battery Card ---- */
+    .wt-bat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .wt-bat-visual {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0;
+    }
+
+    .wt-bat-pct {
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: #1c1c1e;
+    }
+
+    .wt-bat-icon {
+      position: relative;
+      width: 60px;
+      height: 28px;
+      border: 2px solid #8e8e93;
+      border-radius: 6px;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .wt-bat-icon::after {
+      content: "";
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 10px;
+      background: #8e8e93;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .wt-bat-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .wt-bat-stats {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .wt-bat-stats div {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+    }
+
+    .wt-bat-stats span {
+      color: #8e8e93;
+    }
+
+    .wt-bat-stats strong {
+      color: #1c1c1e;
+    }
+
+    /* ---- Storage Card ---- */
+    .wt-sto-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .wt-sto-bar {
+      height: 8px;
+      background: #e5e5ea;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .wt-sto-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand), #ff8c42);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .wt-sto-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #8e8e93;
+    }
+
+    .wt-sec-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #8e8e93;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 8px 0 4px 14px;
+    }
+
+    .wt-usage-list {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .wt-usage-list div {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      border-bottom: 1px solid #e5e5ea;
+    }
+
+    .wt-usage-list div:last-child {
+      border-bottom: none;
+    }
+
+    .wt-usage-list span {
+      color: #1c1c1e;
+    }
+
+    .wt-usage-pct {
+      color: #8e8e93 !important;
+      font-weight: 600;
+    }
+
+    /* ---- About List ---- */
+    .wt-about-list {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .wt-about-list div {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      border-bottom: 1px solid #e5e5ea;
+    }
+
+    .wt-about-list div:last-child {
+      border-bottom: none;
+    }
+
+    .wt-about-list span {
+      color: #8e8e93;
+    }
+
+    .wt-about-list strong {
+      color: #1c1c1e;
+      text-align: right;
+    }
+
+    /* ---- Wallpaper Grid ---- */
+    .wt-wp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 8px 0;
+      justify-items: center;
+    }
+
+    .wt-wp-opt {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .wt-wp-opt:hover {
+      transform: scale(1.12);
+      border-color: var(--brand);
+    }
+
+    /* ---- Camera ---- */
+    .wt-cam-app {
+      position: relative;
+    }
+
+    .wt-cam-ui {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wt-cam-top {
+      padding: 10px 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .wt-cam-vf {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wt-cam-bottom {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 14px 20px;
+      color: white;
+    }
+
+    .wt-capture-btn {
+      font-size: 2.4rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    }
+
+    .wt-capture-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .wt-capture-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* ---- Photos ---- */
+    .wt-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .wt-photo-thumb {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e5e5ea;
+      border-radius: 4px;
+      font-size: 1.6rem;
+    }
+
+    /* ---- Desktop ---- */
+    .wt-desktop {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-size: cover;
+      position: relative;
+    }
+
+    .wt-desktop-icons {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      padding: 16px 12px;
+      align-content: start;
+    }
+
+    .wt-desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 6px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .wt-desktop-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .wt-desktop-icon:active {
+      transform: scale(0.95);
+    }
+
+    .wt-di-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+
+    .wt-di-label {
+      font-size: 0.65rem;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+      line-height: 1.2;
+    }
+
+    .wt-taskbar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 10px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      flex-shrink: 0;
+      height: 44px;
+    }
+
+    .wt-start {
+      padding: 4px 10px;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .wt-start:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .wt-taskbar-icons {
+      display: flex;
+      gap: 2px;
+      margin-left: 8px;
+    }
+
+    .wt-tb-icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .wt-tb-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .wt-taskbar-right {
+      margin-left: auto;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wt-tb-time {
+      font-weight: 600;
+    }
+
+    /* ---- Windows ---- */
+    .wt-window {
+      background: #f0f0f0;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: wt-win-open 0.2s ease;
+    }
+
+    @keyframes wt-win-open {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .wt-win-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #e5e5e5;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #1c1c1e;
+      flex-shrink: 0;
+    }
+
+    .wt-win-close {
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.08);
+      color: #555;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .wt-win-close:hover {
+      background: rgba(255, 59, 48, 0.2);
+      color: #ff3b30;
+    }
+
+    .wt-win-body {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 8px 0;
+    }
+
+    .wt-win-body .wt-set-item {
+      background: #f8f8f8;
+    }
+
+    /* ---- File Explorer ---- */
+    .wt-files-sidebar {
+      background: #e5e5e5;
+      padding: 8px 0;
+      flex-shrink: 0;
+    }
+
+    .wt-files-sidebar div {
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: #1c1c1e;
+      cursor: pointer;
+    }
+
+    .wt-files-sidebar div:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .wt-files-main {
+      flex: 1;
+      overflow-y: auto;
+      background: white;
+    }
+
+    .wt-file-row {
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      border-bottom: 1px solid #e5e5ea;
+      cursor: pointer;
+    }
+
+    .wt-file-row:hover {
+      background: #f0f0f5;
+    }
+
+    /* ---- Product Card Experience Button ---- */
+    .price-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .experience-btn {
+      min-height: 38px !important;
+      font-size: 0.8rem !important;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 560px) {
+      .wt-phone {
+        width: 220px;
+        height: 420px;
+        border-radius: 30px;
+        padding: 8px;
+      }
+      .wt-phone .wt-screen {
+        border-radius: 22px;
+      }
+      .wt-laptop {
+        width: 300px;
+        height: 210px;
+        padding: 5px;
+      }
+      .wt-lock-time {
+        font-size: 2.6rem;
+      }
+      .wt-app-grid {
+        padding: 12px 8px 4px;
+        gap: 4px;
+      }
+      .wt-icon-bg {
+        width: 34px;
+        height: 34px;
+        font-size: 1.2rem;
+      }
+      .wt-app-name {
+        font-size: 0.5rem;
+      }
+      .wt-desktop-icons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .wt-hint {
+        font-size: 0.75rem;
+      }
+      .wt-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .wt-title {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .wt-phone {
+        width: 180px;
+        height: 340px;
+        border-radius: 24px;
+        padding: 6px;
+      }
+      .wt-phone .wt-screen {
+        border-radius: 18px;
+      }
+      .wt-laptop {
+        width: 240px;
+        height: 170px;
+      }
+      .wt-lock-time {
+        font-size: 2rem;
+      }
+      .wt-home-btn {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 6px;
+    }
 
 .price-row strong,
 .service-card strong {

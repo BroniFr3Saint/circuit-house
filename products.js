@@ -452,13 +452,27 @@ function checkoutUrl(product) {
   return `checkout.html?item=${item}&price=${product.price}`;
 }
 
-const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23fff0e8' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ff5a1f' font-size='48' font-family='sans-serif'%3E📱%3C/text%3E%3Ctext x='200' y='175' text-anchor='middle' fill='%235f6f89' font-size='14' font-family='sans-serif'%3ECircuitHouse item%3C/text%3E%3C/svg%3E";
+function fallbackForCategory(category) {
+  const icons = {
+    Laptop: '💻',
+    Phone: '📱',
+    Accessory: '⌨️',
+    Service: '🛠️',
+  };
+  const emoji = icons[category] || '📱';
+  const label = category === 'Accessory' ? 'Accessory' : category === 'Service' ? 'Service' : 'CircuitHouse item';
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="%23fff0e8" width="400" height="300"/><text x="200" y="140" text-anchor="middle" fill="%23ff5a1f" font-size="48" font-family="sans-serif">${emoji}</text><text x="200" y="175" text-anchor="middle" fill="%235f6f89" font-size="14" font-family="sans-serif">${label}</text></svg>`;
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+
+const FALLBACK_IMAGE = fallbackForCategory('Phone');
 
 function productCard(product) {
   const actionLabel = product.category === "Service" ? "Book" : "Buy";
+  const hasWalkthrough = product.category === "Laptop" || product.category === "Phone";
   return `
     <article class="product-card">
-      <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
+      <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackForCategory(product.category)}';" />
       <div class="product-body">
         <span class="tag">${product.subcategory || product.brand || product.category}</span>
         <h3>${product.name}</h3>
@@ -466,7 +480,10 @@ function productCard(product) {
         <p class="sku-line">${product.sku || "CircuitHouse verified item"}</p>
         <div class="price-row">
           <strong>${formatCedis(product.price)}</strong>
-          <a class="button small" href="${checkoutUrl(product)}">${actionLabel}</a>
+          <div class="price-actions">
+            ${hasWalkthrough ? `<button class="button small outline experience-btn">🔍 Experience</button>` : ''}
+            <a class="button small" href="${checkoutUrl(product)}">${actionLabel}</a>
+          </div>
         </div>
       </div>
     </article>
