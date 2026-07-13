@@ -452,11 +452,13 @@ function checkoutUrl(product) {
   return `checkout.html?item=${item}&price=${product.price}`;
 }
 
+const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23fff0e8' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ff5a1f' font-size='48' font-family='sans-serif'%3E📱%3C/text%3E%3Ctext x='200' y='175' text-anchor='middle' fill='%235f6f89' font-size='14' font-family='sans-serif'%3ECircuitHouse item%3C/text%3E%3C/svg%3E";
+
 function productCard(product) {
   const actionLabel = product.category === "Service" ? "Book" : "Buy";
   return `
     <article class="product-card">
-      <img src="${product.image}" alt="${product.name}" />
+      <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';" />
       <div class="product-body">
         <span class="tag">${product.subcategory || product.brand || product.category}</span>
         <h3>${product.name}</h3>

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page Not Found | CircuitHouse</title>
+    <meta name="description" content="The page you're looking for doesn't exist or there's a connection problem. Contact CircuitHouse for help." />
+    <meta property="og:title" content="Page Not Found | CircuitHouse" />
+    <meta property="og:description" content="The page you're looking for doesn't exist or there's a connection problem." />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .error-page {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 24px;
+      }
+
+      .error-code {
+        font-size: 6rem;
+        font-weight: 900;
+        line-height: 1;
+        color: var(--brand);
+        letter-spacing: -0.04em;
+        margin-bottom: 8px;
+      }
+
+      .error-icon {
+        font-size: 4rem;
+        margin-bottom: 8px;
+      }
+
+      .error-page h1 {
+        font-size: 2.2rem;
+        color: var(--brand-dark);
+        margin-bottom: 12px;
+      }
+
+      .error-page p {
+        max-width: 520px;
+        margin: 0 auto 32px;
+        font-size: 1.05rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .error-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin-bottom: 48px;
+      }
+
+      .error-help-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        max-width: 640px;
+        width: 100%;
+      }
+
+      .error-help-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 24px 16px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-card);
+        text-decoration: none;
+        transition: all 0.25s ease;
+      }
+
+      .error-help-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-elevated);
+        border-color: var(--brand);
+      }
+
+      .error-help-card .help-icon {
+        font-size: 2rem;
+        line-height: 1;
+      }
+
+      .error-help-card .help-label {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--ink-secondary);
+      }
+
+      .error-help-card .help-desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .connection-check {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink-secondary);
+      }
+
+      .connection-check .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .connection-check .dot.online {
+        background: var(--success);
+      }
+
+      .connection-check .dot.offline {
+        background: var(--danger);
+      }
+
+      @media (max-width: 620px) {
+        .error-code {
+          font-size: 4rem;
+        }
+        .error-page h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="CircuitHouse home">
+        <img class="brand-logo" src="logo.svg" alt="" />
+        <span>CircuitHouse</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="items.html">Catalogue</a>
+        <a href="budget.html">Budget Finder</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="error-page">
+        <div class="error-icon" id="status-icon">🔌</div>
+        <div class="error-code">404</div>
+        <h1 id="status-title">Page not found</h1>
+        <p id="status-message">
+          The page you're looking for doesn't exist, or there may be a
+          connection problem. Let's get you back on track.
+        </p>
+
+        <div class="error-actions">
+          <a class="button primary" href="index.html">Go to homepage</a>
+          <a class="button outline" href="items.html">Browse catalogue</a>
+        </div>
+
+        <div class="connection-check" id="connection-status">
+          <span class="dot" id="connection-dot"></span>
+          <span id="connection-text">Checking connection...</span>
+        </div>
+
+        <div class="error-help-grid">
+          <a class="error-help-card" href="tel:+233205155149">
+            <span class="help-icon">📞</span>
+            <span class="help-label">Call us</span>
+            <span class="help-desc">+233 205 155 149</span>
+          </a>
+          <a class="error-help-card" href="https://wa.me/233205155149" target="_blank" rel="noopener">
+            <span class="help-icon">💬</span>
+            <span class="help-label">WhatsApp</span>
+            <span class="help-desc">Chat with support</span>
+          </a>
+          <a class="error-help-card" href="contact.html">
+            <span class="help-icon">✉️</span>
+            <span class="help-label">Contact page</span>
+            <span class="help-desc">Send an enquiry</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span class="footer-brand">CircuitHouse</span>
+      <div class="footer-divider"></div>
+      <span class="footer-tagline" style="font-weight:700;color:rgba(255,255,255,0.85);">Your Best and Number one choice for Laptops, phones, accessories, installations, and delivery — Takoradi, Ghana</span>
+      <div class="footer-bottom">
+        &copy; 2026 CircuitHouse &mdash; Your trusted tech marketplace in Ghana
+      </div>
+    </footer>
+
+    <a href="https://wa.me/233205155149" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+      <span class="wa-tooltip">Chat with us</span>
+      💬
+    </a>
+
+    <script>
+      function updateConnectionStatus() {
+        const dot = document.getElementById('connection-dot');
+        const text = document.getElementById('connection-text');
+        const icon = document.getElementById('status-icon');
+        const title = document.getElementById('status-title');
+        const message = document.getElementById('status-message');
+
+        if (navigator.onLine) {
+          dot.className = 'dot online';
+          text.textContent = 'You are online';
+          icon.textContent = '🔍';
+          title.textContent = 'Page not found';
+          message.textContent = "The page you're looking for doesn't exist. It may have been moved, renamed, or is temporarily unavailable.";
+        } else {
+          dot.className = 'dot offline';
+          text.textContent = 'You are offline';
+          icon.textContent = '🔌';
+          title.textContent = 'No connection';
+          message.textContent = "It looks like you're not connected to the internet. Please check your connection and try again.";
+        }
+      }
+
+      window.addEventListener('online', updateConnectionStatus);
+      window.addEventListener('offline', updateConnectionStatus);
+      updateConnectionStatus();
+    </script>
+  </body>
+</html>
