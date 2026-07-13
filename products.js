@@ -465,8 +465,6 @@ function fallbackForCategory(category) {
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
-const FALLBACK_IMAGE = fallbackForCategory('Phone');
-
 function productCard(product) {
   const actionLabel = product.category === "Service" ? "Book" : "Buy";
   const hasWalkthrough = product.category === "Laptop" || product.category === "Phone";

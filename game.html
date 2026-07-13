@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Memory Match | CircuitHouse</title>
-    <meta name="description" content="Take a break and play CircuitHouse Memory Match — a relaxing card game with tech-themed pairs." />
-    <meta property="og:title" content="Memory Match | CircuitHouse" />
-    <meta property="og:description" content="Relax and play! Match tech-themed pairs in this fun memory game." />
+    <title>Games | CircuitHouse</title>
+    <meta name="description" content="Take a break and play CircuitHouse games — Memory Match or Speed Specs typing challenge!" />
+    <meta property="og:title" content="Games | CircuitHouse" />
+    <meta property="og:description" content="Relax and play! Memory Match pairs or Speed Specs typing challenge." />
     <meta property="og:type" content="website" />
     <link rel="stylesheet" href="styles.css" />
     <style>
@@ -271,7 +271,268 @@
         }
       }
 
+      /* ===== Game Switcher Tabs ===== */
+      .game-tabs {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        margin-bottom: 32px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 4px;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .game-tab {
+        flex: 1;
+        padding: 10px 16px;
+        border: none;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-family: inherit;
+      }
+
+      .game-tab:hover {
+        color: var(--brand-dark);
+        background: var(--brand-soft);
+      }
+
+      .game-tab.active {
+        background: var(--brand);
+        color: white;
+        box-shadow: 0 2px 8px rgba(255, 90, 31, 0.3);
+      }
+
+      .game-content {
+        display: none;
+      }
+
+      .game-content.active {
+        display: block;
+        animation: gameFadeIn 0.35s ease;
+      }
+
+      @keyframes gameFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ===== Speed Specs Game ===== */
+      .speed-specs {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .speed-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 14px 20px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        margin-bottom: 16px;
+        box-shadow: var(--shadow-card);
+      }
+
+      .speed-header .speed-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+      }
+
+      .speed-header .speed-stat strong {
+        font-size: 1.3rem;
+        color: var(--brand-dark);
+        line-height: 1.2;
+      }
+
+      .speed-header .speed-stat .best-score {
+        color: var(--brand);
+      }
+
+      .speed-header .speed-stat span {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .speed-header .speed-lives {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+      }
+
+      /* ---- Speed Game Area ---- */
+      .speed-area {
+        position: relative;
+        width: 100%;
+        height: 280px;
+        background: linear-gradient(180deg, #0d1b2a 0%, #1a2a4a 100%);
+        border-radius: var(--radius-md);
+        border: 2px solid var(--line);
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+
+      .speed-word {
+        position: absolute;
+        right: -200px;
+        padding: 8px 16px;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 90, 31, 0.15);
+        border: 1px solid rgba(255, 90, 31, 0.3);
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        white-space: nowrap;
+        transition: opacity 0.2s;
+        pointer-events: none;
+      }
+
+      .speed-word.matched {
+        opacity: 0;
+        transform: scale(1.3);
+        transition: opacity 0.15s, transform 0.2s;
+      }
+
+      /* ---- Speed Input ---- */
+      .speed-input-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .speed-input-row input {
+        flex: 1;
+        min-height: 48px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+        text-align: center;
+      }
+
+      .speed-input-row input:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(255, 90, 31, 0.15);
+      }
+
+      .speed-input-row .button {
+        min-height: 48px;
+        flex-shrink: 0;
+      }
+
+      /* ---- Speed Hit Effects ---- */
+      .speed-pop {
+        position: absolute;
+        pointer-events: none;
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--success);
+        animation: popFloat 0.8s ease forwards;
+      }
+
+      @keyframes popFloat {
+        0% { opacity: 1; transform: translateY(0) scale(1); }
+        100% { opacity: 0; transform: translateY(-40px) scale(1.4); }
+      }
+
+      .speed-miss-line {
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: rgba(255, 59, 48, 0.3);
+        z-index: 1;
+      }
+
+      .speed-miss-line::before {
+        content: '☠️';
+        position: absolute;
+        top: 50%;
+        left: -14px;
+        transform: translateY(-50%);
+        font-size: 0.8rem;
+        opacity: 0.4;
+      }
+
+      /* ---- Speed Game Over ---- */
+      .speed-overlay {
+        display: none;
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .speed-overlay.visible {
+        display: flex;
+        animation: winFadeIn 0.3s ease;
+      }
+
+      .speed-overlay h2 {
+        color: white;
+        font-size: 2rem;
+      }
+
+      .speed-overlay p {
+        color: rgba(255,255,255,0.6);
+        font-size: 1rem;
+      }
+
+      .speed-overlay .speed-final-score {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--brand);
+        line-height: 1;
+        margin: 8px 0;
+      }
+
+      .speed-overlay .button {
+        margin-top: 12px;
+      }
+
       /* ---- Responsive ---- */
+      @media (max-width: 620px) {
+        .speed-area {
+          height: 220px;
+        }
+        .speed-word {
+          font-size: 0.9rem;
+          padding: 6px 12px;
+        }
+        .speed-header .speed-stat strong {
+          font-size: 1.1rem;
+        }
+        .speed-input-row {
+          flex-direction: column;
+        }
+        .speed-input-row .button {
+          width: 100%;
+        }
+      }
+
       @media (max-width: 520px) {
         .memory-grid {
           gap: 8px;
@@ -291,6 +552,13 @@
         }
         .win-modal {
           padding: 32px 24px;
+        }
+        .game-tabs {
+          max-width: 300px;
+        }
+        .game-tab {
+          font-size: 0.78rem;
+          padding: 8px 12px;
         }
       }
     </style>
@@ -318,32 +586,88 @@
     <main>
       <section class="game-page">
         <p class="eyebrow">Take a break</p>
-        <h1>Memory Match</h1>
-        <p>Flip the cards and find all matching pairs of tech icons. Relax and enjoy!</p>
+        <h1>CircuitHouse Games</h1>
+        <p>Relax and have fun — two games to keep you entertained!</p>
 
-        <div class="game-stats">
-          <div class="game-stat">
-            <span class="stat-value" id="moves">0</span>
-            <span class="stat-label">Moves</span>
+        <!-- Game Switcher -->
+        <div class="game-tabs">
+          <button class="game-tab active" data-game="memory">🧠 Memory Match</button>
+          <button class="game-tab" data-game="speed">⚡ Speed Specs</button>
+        </div>
+
+        <!-- ===== MEMORY MATCH ===== -->
+        <div class="game-content active" id="gameMemory">
+          <h2 style="font-size:1.6rem;margin-bottom:6px">Memory Match</h2>
+          <p style="margin-bottom:24px">Flip cards and find all matching pairs of tech icons!</p>
+
+          <div class="game-stats">
+            <div class="game-stat">
+              <span class="stat-value" id="moves">0</span>
+              <span class="stat-label">Moves</span>
+            </div>
+            <div class="game-stat">
+              <span class="stat-value" id="matches">0</span>
+              <span class="stat-label">Matches</span>
+            </div>
+            <div class="game-stat">
+              <span class="stat-value" id="timer">0:00</span>
+              <span class="stat-label">Time</span>
+            </div>
+            <div class="game-stat">
+              <span class="stat-value best" id="bestScore">—</span>
+              <span class="stat-label">Best</span>
+            </div>
           </div>
-          <div class="game-stat">
-            <span class="stat-value" id="matches">0</span>
-            <span class="stat-label">Matches</span>
-          </div>
-          <div class="game-stat">
-            <span class="stat-value" id="timer">0:00</span>
-            <span class="stat-label">Time</span>
-          </div>
-          <div class="game-stat">
-            <span class="stat-value best" id="bestScore">—</span>
-            <span class="stat-label">Best</span>
+
+          <div class="memory-grid" id="memoryGrid"></div>
+
+          <div class="game-actions">
+            <button class="button primary" id="restartBtn">🔄 New game</button>
           </div>
         </div>
 
-        <div class="memory-grid" id="memoryGrid"></div>
+        <!-- ===== SPEED SPECS ===== -->
+        <div class="game-content" id="gameSpeed">
+          <h2 style="font-size:1.6rem;margin-bottom:6px">Speed Specs</h2>
+          <p style="margin-bottom:24px">Type the tech words before they fly off screen! How fast can you type?</p>
 
-        <div class="game-actions">
-          <button class="button primary" id="restartBtn">🔄 New game</button>
+          <div class="speed-specs">
+            <div class="speed-header">
+              <div class="speed-stat">
+                <strong id="speedScore">0</strong>
+                <span>Score</span>
+              </div>
+              <div class="speed-stat">
+                <strong id="speedStreak">0</strong>
+                <span>Streak</span>
+              </div>
+              <div class="speed-stat">
+                <strong id="speedLevel">1</strong>
+                <span>Level</span>
+              </div>
+              <div class="speed-stat">
+                <strong class="best-score" id="speedBest">—</strong>
+                <span>Best</span>
+              </div>
+              <div class="speed-lives" id="speedLives">❤️❤️❤️❤️❤️</div>
+            </div>
+
+            <div class="speed-area" id="speedArea">
+              <div class="speed-miss-line"></div>
+              <div class="speed-overlay" id="speedOverlay">
+                <h2>💥 Game Over</h2>
+                <p>You typed</p>
+                <div class="speed-final-score" id="speedFinalScore">0</div>
+                <p>tech words!</p>
+                <button class="button primary" id="speedRestart">🔄 Try again</button>
+              </div>
+            </div>
+
+            <div class="speed-input-row">
+              <input type="text" id="speedInput" placeholder="Type the word and press Enter..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              <button class="button primary" id="speedSubmit">⏎ Go</button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -627,6 +951,294 @@
 
       // ---- Start ----
       initGame();
+
+      // ============================================================
+      // GAME TAB SWITCHER
+      // ============================================================
+      document.querySelectorAll('.game-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.game-tab').forEach(function(t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          var game = tab.dataset.game;
+          document.querySelectorAll('.game-content').forEach(function(c) { c.classList.remove('active'); });
+          document.getElementById('game' + game.charAt(0).toUpperCase() + game.slice(1)).classList.add('active');
+          if (game === 'speed') { document.getElementById('speedInput').focus(); }
+        });
+      });
+
+      // ============================================================
+      // SPEED SPECS GAME
+      // ============================================================
+      (function() {
+        'use strict';
+
+        var techWords = [
+          'laptop', 'phone', 'charger', 'cable', 'speaker', 'keyboard', 'mouse', 'monitor',
+          'printer', 'router', 'tablet', 'camera', 'earbuds', 'headset', 'adapter', 'drive',
+          'battery', 'display', 'pixel', 'android', 'iphone', 'windows', 'processor', 'storage',
+          'usbc', 'hdmi', 'bluetooth', 'wifi', 'gigabit', 'amoled', 'retina', 'thunderbolt',
+          'snapdragon', 'tensor', 'ryzen', 'corei5', 'corei7', 'graphics', 'nvidia', 'ultrabook',
+          'workstation', 'powerbank', 'firmware', 'ethernet', 'sensor', 'gaming', 'lithium',
+          'usbhub', 'webcam', 'microphone', 'ssd', 'nvme', 'ddr5', 'motherboard', 'cooling',
+        ];
+
+        var area = document.getElementById('speedArea');
+        var scoreEl = document.getElementById('speedScore');
+        var streakEl = document.getElementById('speedStreak');
+        var levelEl = document.getElementById('speedLevel');
+        var livesEl = document.getElementById('speedLives');
+        var bestEl = document.getElementById('speedBest');
+        var inputEl = document.getElementById('speedInput');
+        var submitBtn = document.getElementById('speedSubmit');
+        var overlay = document.getElementById('speedOverlay');
+        var finalScoreEl = document.getElementById('speedFinalScore');
+        var restartBtn = document.getElementById('speedRestart');
+
+        var score = 0;
+        var streak = 0;
+        var level = 1;
+        var lives = 5;
+        var activeWords = [];
+        var wordIdCounter = 0;
+        var spawnInterval = null;
+        var animFrame = null;
+        var gameActive = false;
+        var spawnRate = 2500; // ms between spawns
+        var baseSpeed = 1.2; // pixels per frame
+
+        // Load best score
+        function loadSpeedBest() {
+          var saved = localStorage.getItem('ch-speed-best');
+          bestEl.textContent = saved || '—';
+        }
+        loadSpeedBest();
+
+        function saveSpeedBest(val) {
+          var current = parseInt(localStorage.getItem('ch-speed-best'));
+          if (!current || val > current) {
+            localStorage.setItem('ch-speed-best', val);
+            bestEl.textContent = val;
+          }
+        }
+
+        function updateUI() {
+          scoreEl.textContent = score;
+          streakEl.textContent = streak;
+          levelEl.textContent = level;
+          livesEl.textContent = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 5 - lives));
+        }
+
+        // Spawn a new word
+        function spawnWord() {
+          if (!gameActive) return;
+          var word = techWords[Math.floor(Math.random() * techWords.length)];
+          // Avoid duplicates currently on screen
+          var existing = activeWords.map(function(w) { return w.text; });
+          var attempts = 0;
+          while (existing.indexOf(word) !== -1 && attempts < 10) {
+            word = techWords[Math.floor(Math.random() * techWords.length)];
+            attempts++;
+          }
+
+          var id = wordIdCounter++;
+          var el = document.createElement('div');
+          el.className = 'speed-word';
+          el.textContent = word;
+          el.style.top = (20 + Math.random() * (area.offsetHeight - 70)) + 'px';
+          el.id = 'sw-' + id;
+          area.appendChild(el);
+
+          activeWords.push({
+            id: id,
+            text: word,
+            el: el,
+            x: area.offsetWidth + 20,
+            matched: false
+          });
+
+          // Spawn interval is managed by level-up logic and startSpeedGame
+        }
+
+        // Game loop
+        function gameLoop() {
+          if (!gameActive) return;
+          var speed = baseSpeed + (level - 1) * 0.15;
+          var deadZone = 10; // matches .speed-miss-line left position
+
+          for (var i = activeWords.length - 1; i >= 0; i--) {
+            var w = activeWords[i];
+            if (w.matched) {
+              activeWords.splice(i, 1);
+              continue;
+            }
+            w.x -= speed;
+            w.el.style.right = (area.offsetWidth - w.x) + 'px';
+
+            // Check if word reached the dead zone (left edge)
+            if (w.x < deadZone) {
+              w.el.remove();
+              activeWords.splice(i, 1);
+              loseLife();
+            }
+          }
+
+          animFrame = requestAnimationFrame(gameLoop);
+        }
+
+        function loseLife() {
+          lives--;
+          updateUI();
+          streak = 0;
+          streakEl.textContent = '0';
+          if (lives <= 0) {
+            gameOver();
+          }
+        }
+
+        // Check if typed word matches any active word
+        function checkMatch(input) {
+          if (!gameActive || !input) return false;
+          var normalized = input.toLowerCase().trim().replace(/\s+/g, '');
+
+          for (var i = 0; i < activeWords.length; i++) {
+            var w = activeWords[i];
+            if (w.matched) continue;
+            if (w.text.toLowerCase() === normalized) {
+              // Match!
+              w.matched = true;
+              w.el.classList.add('matched');
+
+              // Pop effect
+              var pop = document.createElement('div');
+              pop.className = 'speed-pop';
+              pop.textContent = '✨ +' + (10 * level);
+              pop.style.left = w.el.offsetLeft + 'px';
+              pop.style.top = w.el.offsetTop + 'px';
+              area.appendChild(pop);
+              setTimeout(function() { pop.remove(); }, 800);
+
+              // Remove word after animation
+              setTimeout(function() {
+                if (w.el.parentNode) w.el.remove();
+              }, 200);
+
+              score += 10 * level;
+              streak++;
+              updateUI();
+
+              // Level up every 100 points
+              var newLevel = Math.floor(score / 100) + 1;
+              if (newLevel > level) {
+                level = newLevel;
+                levelEl.textContent = level;
+                // Re-set spawn interval with new speed
+                if (spawnInterval) clearInterval(spawnInterval);
+                spawnInterval = setInterval(spawnWord, Math.max(800, spawnRate - (level - 1) * 150));
+              }
+
+              return true;
+            }
+          }
+          return false;
+        }
+
+        function startSpeedGame() {
+          // Clean up
+          stopSpeedGame();
+          score = 0;
+          streak = 0;
+          level = 1;
+          lives = 5;
+          activeWords = [];
+          wordIdCounter = 0;
+          gameActive = true;
+
+          overlay.classList.remove('visible');
+          area.querySelectorAll('.speed-word, .speed-pop').forEach(function(el) { el.remove(); });
+
+          updateUI();
+          inputEl.value = '';
+          inputEl.disabled = false;
+          inputEl.focus();
+
+          spawnInterval = setInterval(spawnWord, spawnRate);
+          animFrame = requestAnimationFrame(gameLoop);
+        }
+
+        function stopSpeedGame() {
+          gameActive = false;
+          if (spawnInterval) { clearInterval(spawnInterval); spawnInterval = null; }
+          if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+        }
+
+        function gameOver() {
+          stopSpeedGame();
+          saveSpeedBest(score);
+          finalScoreEl.textContent = score;
+          overlay.classList.add('visible');
+          inputEl.disabled = true;
+        }
+
+        // Input events
+        function handleSpeedInput() {
+          var val = inputEl.value.trim();
+          if (!val || !gameActive) return;
+          if (checkMatch(val)) {
+            inputEl.value = '';
+          }
+        }
+
+        inputEl.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSpeedInput();
+          }
+        });
+
+        submitBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          handleSpeedInput();
+        });
+
+        restartBtn.addEventListener('click', function() {
+          startSpeedGame();
+        });
+
+        // Start game when tab is first shown
+        var speedStarted = false;
+        document.querySelector('[data-game="speed"]').addEventListener('click', function() {
+          if (!speedStarted) {
+            speedStarted = true;
+            setTimeout(startSpeedGame, 400);
+          }
+        });
+
+        // Stop when switching away
+        document.querySelectorAll('.game-tab').forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            if (tab.dataset.game !== 'speed') {
+              stopSpeedGame();
+              overlay.classList.remove('visible');
+            }
+          });
+        });
+
+        // Keyboard shortcut 'S' to restart
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 's' || e.key === 'S') {
+            var speedContent = document.getElementById('gameSpeed');
+            if (speedContent.classList.contains('active') && !gameActive) {
+              startSpeedGame();
+            }
+          }
+        });
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+          stopSpeedGame();
+        });
+
+      })();
     </script>
   </body>
 </html>
