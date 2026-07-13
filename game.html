@@ -523,6 +523,7 @@
         cardEl.className = 'memory-card';
         if (card.flipped) cardEl.classList.add('flipped');
         if (card.matched) cardEl.classList.add('matched');
+        cardEl.setAttribute('aria-label', card.matched || card.flipped ? card.emoji : 'Hidden card');
       }
 
       // ---- Win ----
